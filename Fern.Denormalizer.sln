@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Denormalizer", "Denormalizer\Denormalizer.csproj", "{12A5EFD7-0F5E-484A-9CB7-CF3C31D0C51F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12A5EFD7-0F5E-484A-9CB7-CF3C31D0C51F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A5EFD7-0F5E-484A-9CB7-CF3C31D0C51F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A5EFD7-0F5E-484A-9CB7-CF3C31D0C51F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A5EFD7-0F5E-484A-9CB7-CF3C31D0C51F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B396C64-5CCD-4318-8F08-A8D073EE629E}
+	EndGlobalSection
+EndGlobal
