@@ -1,4 +1,4 @@
-﻿namespace Denormalizer.Data
+﻿namespace Denormalizer.Configuration
 {
     public class DataSource
     {

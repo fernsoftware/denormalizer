@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Denormalizer.Data;
-
 namespace Denormalizer.Configuration
 {
     internal sealed class AppConfiguration : IConfiguration
