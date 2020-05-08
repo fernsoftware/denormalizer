@@ -1,0 +1,15 @@
+{
+  "Sources": [
+    {
+      "ConnectionString": "source1",
+      "Order": 1
+    },
+    {
+      "ConnectionString": "source2",
+      "Order": 2
+    }
+  ],
+  "Destination": {
+    "ConnectionString": "destination"
+  }
+}
