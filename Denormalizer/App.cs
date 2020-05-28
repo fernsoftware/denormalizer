@@ -15,7 +15,15 @@ namespace Denormalizer
 
         public async Task Run()
         {
-            await Task.Delay(5000);
+            foreach (var dataSource in _configuration.Sources)
+            {
+                await Synchronize(dataSource);
+            }
+        }
+
+        private async Task Synchronize(DataSource source)
+        {
+            Task.Delay(1000);
         }
     }
 }

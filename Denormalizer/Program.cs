@@ -27,12 +27,14 @@ namespace Denormalizer
         {
             var baseDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
-            if (baseDirectory.Parent?.Parent?.Parent != null)
+            try
             {
                 return baseDirectory.Parent.Parent.Parent.FullName;
             }
-
-            throw new DirectoryNotFoundException();
+            catch
+            {
+                throw new DirectoryNotFoundException();
+            }
         }
     }
 }
