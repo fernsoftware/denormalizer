@@ -32,9 +32,6 @@ namespace Denormalizer
             // Add more steps
         }
 
-        /// <summary>
-        /// Main entry point for the synchronization app.
-        /// </summary>
         public async Task Run()
         {
             var destinationContext = new AzureContext(_configuration.Destination.ConnectionString);

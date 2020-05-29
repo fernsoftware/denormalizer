@@ -1,4 +1,6 @@
-﻿namespace Denormalizer.Entities.PowerBI
+﻿using System;
+
+namespace Denormalizer.Entities.PowerBI
 {
     public sealed class CustomerAccount : BaseEntity
     {
@@ -20,10 +22,30 @@
 
         public int ProductTypeID { get; set; }
 
-        public int TermDeposit { get; set; }
+        public bool TermDeposit { get; set; }
 
         public int SavingsType { get; set; }
 
         public decimal Balance { get; set; }
+
+        public int Age { get; set; }
+
+        public int NumberOfTransactions { get; set; }
+
+        public DateTime BalanceDate { get; set; }
+
+        public int Status { get; set; }
+
+        public bool Active { get; set; }
+
+        public string NameAddress { get; set; }
+
+        public string ProductDescription { get; set; }
+
+        public string OrderItem { get; set; }
+
+        public string OrderItem1 { get; set; }
+
+        public string OrderItem2 { get; set; }
     }
 }
