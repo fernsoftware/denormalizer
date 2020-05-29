@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using AutoMapper;
 
 using Denormalizer.Configuration;
+using Denormalizer.Database;
+using Denormalizer.Steps;
 
 namespace Denormalizer
 {
@@ -10,6 +13,7 @@ namespace Denormalizer
     {
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly Queue<IStep> _steps;
 
         public App(IConfiguration configuration)
         {
@@ -21,19 +25,29 @@ namespace Denormalizer
             });
 
             _mapper = autoMapperConfiguration.CreateMapper();
+
+            _steps = new Queue<IStep>();
+
+            _steps.Enqueue(new CustomerAccountsStep());
+            // Add more steps
         }
 
+        /// <summary>
+        /// Main entry point for the synchronization app.
+        /// </summary>
         public async Task Run()
         {
-            foreach (var dataSource in _configuration.Sources)
-            {
-                await Synchronize(dataSource);
-            }
-        }
+            var destinationContext = new AzureContext(_configuration.Destination.ConnectionString);
 
-        private async Task Synchronize(DataSource source)
-        {
-            Task.Delay(1000);
+            foreach (var source in _configuration.Sources)
+            {
+                var sourceContext = new AbacusContext(source.ConnectionString);
+
+                foreach (var step in _steps)
+                {
+                    await step.Execute(sourceContext, destinationContext, _mapper);
+                }
+            }
         }
     }
 }

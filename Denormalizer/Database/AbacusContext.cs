@@ -1,22 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Denormalizer.Entities.PowerBI;
-
 namespace Denormalizer.Database
 {
-    public class AzureContext : DbContext
+    public class AbacusContext : DbContext
     {
         private readonly string _connectionString;
 
-        public DbSet<CustomerAccount> CustomerAccounts { get; set; }
-
-        public AzureContext(string connectionString)
+        public AbacusContext(string connectionString)
         {
             _connectionString = connectionString;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
+            base.OnConfiguring(builder);
+
             builder.UseSqlServer(_connectionString);
         }
     }
