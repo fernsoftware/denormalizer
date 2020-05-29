@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AutoMapper;
-
 using Denormalizer.Configuration;
 using Denormalizer.Database;
 using Denormalizer.Steps;
@@ -12,19 +10,11 @@ namespace Denormalizer
     internal class App
     {
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
         private readonly Queue<IStep> _steps;
 
         public App(IConfiguration configuration)
         {
             _configuration = configuration;
-
-            var autoMapperConfiguration = new MapperConfiguration(config =>
-            {
-                //config.CreateMap<Entity1, Entity2>()
-            });
-
-            _mapper = autoMapperConfiguration.CreateMapper();
 
             _steps = new Queue<IStep>();
 
@@ -42,7 +32,7 @@ namespace Denormalizer
 
                 foreach (var step in _steps)
                 {
-                    await step.Execute(sourceContext, destinationContext, _mapper);
+                    await step.Execute(sourceContext, destinationContext);
                 }
             }
         }
