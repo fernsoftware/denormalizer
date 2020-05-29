@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Denormalizer.Entities.PowerBI
+namespace Denormalizer.Entities
 {
-    public sealed class CustomerAccount : BaseEntity
+    public sealed class CustomerAccount : BaseAzureEntity
     {
         public int CUAccountID { get; set; }
 

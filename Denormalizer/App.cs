@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Denormalizer.Configuration;
@@ -18,8 +19,9 @@ namespace Denormalizer
 
             _steps = new Queue<IStep>();
 
-            _steps.Enqueue(new CustomerAccountsStep());
-            // Add more steps
+            _steps.Enqueue(new CustomerAccountsStep(
+                valueDate: DateTime.UtcNow,
+                currencyId: 0));
         }
 
         public async Task Run()
