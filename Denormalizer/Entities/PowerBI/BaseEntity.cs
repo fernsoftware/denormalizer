@@ -1,4 +1,4 @@
-﻿namespace Denormalizer.Data.PowerBI
+﻿namespace Denormalizer.Entities.PowerBI
 {
     public abstract class BaseEntity
     {

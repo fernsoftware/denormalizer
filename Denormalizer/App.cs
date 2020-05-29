@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using AutoMapper;
+
 using Denormalizer.Configuration;
 
 namespace Denormalizer
@@ -7,10 +9,18 @@ namespace Denormalizer
     internal class App
     {
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
         public App(IConfiguration configuration)
         {
             _configuration = configuration;
+
+            var autoMapperConfiguration = new MapperConfiguration(config =>
+            {
+                //config.CreateMap<Entity1, Entity2>()
+            });
+
+            _mapper = autoMapperConfiguration.CreateMapper();
         }
 
         public async Task Run()

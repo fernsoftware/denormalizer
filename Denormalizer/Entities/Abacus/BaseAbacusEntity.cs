@@ -1,4 +1,4 @@
-﻿namespace Denormalizer.Data.Abacus
+﻿namespace Denormalizer.Entities.Abacus
 {
     public abstract class BaseAbacusEntity
     { }
