@@ -2,11 +2,13 @@
   "Sources": [
     {
       "ConnectionString": "source1",
-      "Order": 1
+      "Order": 1,
+      "DatabaseId": 1,
     },
     {
       "ConnectionString": "source2",
-      "Order": 2
+      "Order": 2,
+      "DatabaseId": 2
     }
   ],
   "Destination": {

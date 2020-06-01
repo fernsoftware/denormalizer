@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 using Denormalizer.Configuration;
 using Denormalizer.Database;
 using Denormalizer.Steps;
+using Denormalizer.Steps.Parameters;
 
 namespace Denormalizer
 {
@@ -19,22 +20,28 @@ namespace Denormalizer
 
             _steps = new Queue<IStep>();
 
-            _steps.Enqueue(new CustomerAccountsStep(
-                valueDate: DateTime.UtcNow,
-                currencyId: 0));
+            _steps.Enqueue(new CustomerAccountsStep(new CustomerAccountsParameters(DateTime.UtcNow)
+            {
+                CheckDigit = 9999,
+                ProductTypes = 3,
+                LoanStatus = 255,
+                CustomerTypes = 31,
+                RefinanceStart = DateTime.MinValue,
+                RefinanceEnd = DateTime.MaxValue
+            }));
         }
 
-        public async Task Run()
+        public void Run()
         {
             var destinationContext = new AzureContext(_configuration.Destination.ConnectionString);
 
-            foreach (var source in _configuration.Sources)
+            foreach (var source in _configuration.Sources.OrderBy(x => x.Order))
             {
                 var sourceContext = new AbacusContext(source.ConnectionString);
 
                 foreach (var step in _steps)
                 {
-                    await step.Execute(sourceContext, destinationContext);
+                    step.Execute(source.DatabaseId, sourceContext, destinationContext);
                 }
             }
         }

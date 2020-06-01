@@ -5,5 +5,7 @@
         public string ConnectionString { get; set; }
 
         public int Order { get; set; }
+
+        public int DatabaseId { get; set; }
     }
 }

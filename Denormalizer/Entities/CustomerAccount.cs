@@ -2,7 +2,7 @@
 
 namespace Denormalizer.Entities
 {
-    public sealed class CustomerAccount : BaseAzureEntity
+    public sealed class CustomerAccount : BaseEntity
     {
         public int CUAccountID { get; set; }
 
