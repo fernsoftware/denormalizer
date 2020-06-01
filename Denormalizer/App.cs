@@ -4,6 +4,7 @@ using System.Linq;
 
 using Denormalizer.Configuration;
 using Denormalizer.Database;
+using Denormalizer.Logging;
 using Denormalizer.Steps;
 using Denormalizer.Steps.Parameters;
 
@@ -17,10 +18,11 @@ namespace Denormalizer
         public App(IConfiguration configuration)
         {
             _configuration = configuration;
-
             _steps = new Queue<IStep>();
 
-            _steps.Enqueue(new CustomerAccountsStep(new CustomerAccountsParameters(DateTime.UtcNow)
+            var logger = new ConsoleLogger();
+
+            var customerAccountsStep = new CustomerAccountsStep(logger, new CustomerAccountsParameters(DateTime.UtcNow)
             {
                 CheckDigit = 9999,
                 ProductTypes = 3,
@@ -28,7 +30,9 @@ namespace Denormalizer
                 CustomerTypes = 31,
                 RefinanceStart = new DateTime(1900, 1, 1),
                 RefinanceEnd = new DateTime(2079, 1, 1)
-            }));
+            });
+
+            _steps.Enqueue(customerAccountsStep);
         }
 
         public void Run()

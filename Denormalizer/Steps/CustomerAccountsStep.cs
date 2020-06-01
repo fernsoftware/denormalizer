@@ -1,27 +1,32 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
 
 using Microsoft.EntityFrameworkCore;
 
 using Denormalizer.Database;
 using Denormalizer.Factories;
+using Denormalizer.Logging;
 using Denormalizer.Steps.Parameters;
 
 namespace Denormalizer.Steps
 {
-    public sealed class CustomerAccountsStep : IStep
+    public sealed class CustomerAccountsStep : BaseStep
     {
         private readonly CustomerAccountsParameters _parameters;
         private readonly ICustomerAccountFactory _factory;
 
-        public CustomerAccountsStep(CustomerAccountsParameters parameters)
+        public CustomerAccountsStep(ILogger logger, CustomerAccountsParameters parameters)
+            : base(logger)
         {
             _parameters = parameters;
             _factory = new CustomerAccountFactory();
         }
 
-        public void Execute(int databaseId, AbacusContext source, AzureContext destination)
+        public override void Execute(int databaseId, AbacusContext source, AzureContext destination)
         {
+            Logger.Log("Starting CustomerAccounts synchronization");
+
             var sourceQuery = $@"EXEC dbo.[CUReportCUAccounts]
                 @ValueDate = '{_parameters.ValueDate}',
                 @CurrencyID = '{_parameters.CurrencyId}',
@@ -45,27 +50,39 @@ namespace Denormalizer.Steps
                 @NumResults = '{_parameters.NumResults}',
                 @CheckDigit = '{_parameters.CheckDigit}'";
 
-            using var command = source.Database.GetDbConnection().CreateCommand();
-
-            command.CommandText = sourceQuery;
-            command.CommandType = CommandType.Text;
-
-            command.Connection.Open();
-
-            using var result = command.ExecuteReader();
-
-            var sourceEntities = _factory
-                .CreateMany(result)
-                .AsEnumerable();
-
-            foreach (var entity in sourceEntities)
+            try
             {
-                entity.DatabaseId = databaseId;
+                using var command = source.Database.GetDbConnection().CreateCommand();
 
-                destination.CustomerAccounts.Add(entity);
+                command.CommandText = sourceQuery;
+                command.CommandType = CommandType.Text;
+
+                command.Connection.Open();
+
+                using var result = command.ExecuteReader();
+
+                var sourceEntities = _factory
+                    .CreateMany(result)
+                    .AsEnumerable();
+
+                var destinationEntities = destination.CustomerAccounts
+                    .Where(x => x.DatabaseId == databaseId);
+
+                var entitiesToDelete = destinationEntities.Except(sourceEntities);
+                var entitiesToAdd = sourceEntities.Except(destinationEntities);
+                var entitiesToSync = sourceEntities
+                    .Except(entitiesToDelete)
+                    .Except(entitiesToAdd);
+
+                // Remove entities not in Abacus
+                // Add entities not in Azure
+                // Sync entities in both
+                // Save changes
             }
-
-            destination.SaveChanges();
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
         }
     }
 }
