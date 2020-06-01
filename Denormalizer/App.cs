@@ -26,14 +26,15 @@ namespace Denormalizer
                 ProductTypes = 3,
                 LoanStatus = 255,
                 CustomerTypes = 31,
-                RefinanceStart = DateTime.MinValue,
-                RefinanceEnd = DateTime.MaxValue
+                RefinanceStart = new DateTime(1900, 1, 1),
+                RefinanceEnd = new DateTime(2079, 1, 1)
             }));
         }
 
         public void Run()
         {
-            var destinationContext = new AzureContext(_configuration.Destination.ConnectionString);
+            var factory = new AzureContextFactory();
+            var destinationContext = factory.CreateDbContext(null);
 
             foreach (var source in _configuration.Sources.OrderBy(x => x.Order))
             {

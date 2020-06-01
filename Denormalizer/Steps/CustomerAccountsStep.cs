@@ -24,31 +24,33 @@ namespace Denormalizer.Steps
         {
             var sourceQuery = $@"EXEC dbo.[CUReportCUAccounts]
                 @ValueDate = '{_parameters.ValueDate}',
-                @CurrencyID = '{_parameters.CurrencyId}'
-                @BranchID = '{_parameters.BranchId}'
-                @AccNoStart = '{_parameters.AccNoStart}'
-                @AccNoEnd = '{_parameters.AccNoEnd}'
-                @ActiveState = '{_parameters.ActiveState}'
-                @GroupIDs = '{_parameters.GroupIDs}'
-                @ProductTypes = '{_parameters.ProductTypes}'
-                @ProductID = '{_parameters.ProductID}'
-                @LoanStatus = '{_parameters.LoanStatus}'
-                @LoanSourceOfFundsID = '{_parameters.LoanSourceOfFundsID}'
-                @LoanReasonID = '{_parameters.LoanReasonID}'
-                @DistrictCodeID = '{_parameters.DistrictCodeID}'
-                @PortfolioID = '{_parameters.PortfolioID}'
-                @CustomerTypes = '{_parameters.CustomerTypes}'
-                @RefinancedLoans = '{_parameters.RefinancedLoans}'
-                @RefinanceStart = '{_parameters.RefinanceStart}'
-                @RefinanceEnd = '{_parameters.RefinanceEnd}'
-                @OrderBy = '{_parameters.OrderBy}'
-                @NumResults = '{_parameters.NumResults}'
+                @CurrencyID = '{_parameters.CurrencyId}',
+                @BranchID = '{_parameters.BranchId}',
+                @AccNoStart = '{_parameters.AccNoStart}',
+                @AccNoEnd = '{_parameters.AccNoEnd}',
+                @ActiveState = '{_parameters.ActiveState}',
+                @GroupIDs = '{_parameters.GroupIDs}',
+                @ProductTypes = '{_parameters.ProductTypes}',
+                @ProductID = '{_parameters.ProductID}',
+                @LoanStatus = '{_parameters.LoanStatus}',
+                @LoanSourceOfFundsID = '{_parameters.LoanSourceOfFundsID}',
+                @LoanReasonID = '{_parameters.LoanReasonID}',
+                @DistrictCodeID = '{_parameters.DistrictCodeID}',
+                @PortfolioID = '{_parameters.PortfolioID}',
+                @CustomerTypes = '{_parameters.CustomerTypes}',
+                @RefinancedLoans = '{_parameters.RefinancedLoans}',
+                @RefinanceStart = '{_parameters.RefinanceStart}',
+                @RefinanceEnd = '{_parameters.RefinanceEnd}',
+                @OrderBy = '{_parameters.OrderBy}',
+                @NumResults = '{_parameters.NumResults}',
                 @CheckDigit = '{_parameters.CheckDigit}'";
 
             using var command = source.Database.GetDbConnection().CreateCommand();
 
             command.CommandText = sourceQuery;
-            command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.Text;
+
+            command.Connection.Open();
 
             using var result = command.ExecuteReader();
 

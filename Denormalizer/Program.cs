@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-
-using Newtonsoft.Json;
-
-using Denormalizer.Configuration;
+﻿using Denormalizer.Configuration;
 
 namespace Denormalizer
 {
@@ -11,26 +6,8 @@ namespace Denormalizer
     {
         private static void Main(string[] args)
         {
-            var configuration = JsonConvert.DeserializeObject<AppConfiguration>(
-                File.ReadAllText(Path.Combine(GetConfigurationDirectory(), "config.json")));
-
-            var app = new App(configuration);
-
+            var app = new App(AppConfiguration.Create());
             app.Run();
-        }
-
-        private static string GetConfigurationDirectory()
-        {
-            var baseDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-
-            try
-            {
-                return baseDirectory.Parent.Parent.Parent.FullName;
-            }
-            catch
-            {
-                throw new DirectoryNotFoundException();
-            }
         }
     }
 }

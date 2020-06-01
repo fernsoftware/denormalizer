@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Denormalizer.Steps.Parameters
 {
@@ -28,25 +29,47 @@ namespace Denormalizer.Steps.Parameters
         }
 
         public DateTime ValueDate { get; set; }
+
         public int CurrencyId { get; set; }
+
         public int BranchId { get; set; }
+
         public string AccNoStart { get; set; }
+
         public string AccNoEnd { get; set; }
+
         public int ActiveState { get; set; }
+
         public string GroupIDs { get; set; }
+
         public int ProductTypes { get; set; }
+
         public int ProductID { get; set; }
+
         public int LoanStatus { get; set; }
+
         public int LoanSourceOfFundsID { get; set; }
+
         public int LoanReasonID { get; set; }
+
         public int DistrictCodeID { get; set; }
+
         public int PortfolioID { get; set; }
+
         public int CustomerTypes { get; set; }
+
         public bool RefinancedLoans { get; set; }
+
+        [Range(typeof(DateTime), "1/1/1900", "6/6/2079")]
         public DateTime? RefinanceStart { get; set; }
+
+        [Range(typeof(DateTime), "1/1/1900", "6/6/2079")]
         public DateTime? RefinanceEnd { get; set; }
+
         public int OrderBy { get; set; }
+
         public long NumResults { get; set; }
+
         public int CheckDigit { get; set; }
     }
 }
