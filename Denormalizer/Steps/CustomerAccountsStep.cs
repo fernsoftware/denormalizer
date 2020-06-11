@@ -74,10 +74,21 @@ namespace Denormalizer.Steps
                     .Except(entitiesToDelete)
                     .Except(entitiesToAdd);
 
-                // Remove entities not in Abacus
-                // Add entities not in Azure
-                // Sync entities in both
-                // Save changes
+                foreach (var entity in entitiesToDelete)
+                {
+                    destination.Entry(entity).State = EntityState.Deleted;
+                }
+
+                destination.SaveChanges();
+
+                foreach (var entity in entitiesToAdd)
+                {
+                    destination.Add(entity);
+                }
+
+                destination.SaveChanges();
+
+                // Sync
             }
             catch (Exception ex)
             {
