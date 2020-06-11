@@ -88,7 +88,15 @@ namespace Denormalizer.Steps
 
                 destination.SaveChanges();
 
-                // Sync
+                // Sync entititesToSync by setting properties in destination entity to value of source entity.
+                // Something like this:
+                //
+                // foreach (var entity in entitiesToSync) {
+                //   var destinationEntity = destionation.GetById(entity.Id);
+                //   destinationEntity.LastName = entity.LastName;
+                //   destination.Update(destinationEntity);
+                // }
+                // destination.SaveChanges();
             }
             catch (Exception ex)
             {

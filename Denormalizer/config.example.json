@@ -3,7 +3,7 @@
     {
       "ConnectionString": "source1",
       "Order": 1,
-      "DatabaseId": 1,
+      "DatabaseId": 1
     },
     {
       "ConnectionString": "source2",
